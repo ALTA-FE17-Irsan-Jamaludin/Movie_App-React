@@ -3,14 +3,21 @@ import Card from "./Components/Card";
 import favoriteFilm from "./Data/movie_data.json";
 import PlayingMovie from "./Data/playing_data.json";
 
+interface Movie {
+  judul: string;
+  deskripsi: string;
+  gambar: string;
+  rating: number;
+}
+
 interface OutputData {
   play: boolean;
   showModal: boolean;
-  selectedMovie: any | null;
+  selectedMovie: Movie | null;
 }
 
 export class App extends Component<{}, OutputData> {
-  state = {
+  state: OutputData = {
     play: true,
     showModal: false,
     selectedMovie: null,
@@ -34,7 +41,7 @@ export class App extends Component<{}, OutputData> {
     }
   };
 
-  toggleModal = (item: any) => {
+  toggleModal = (item: Movie | null) => {
     this.setState((prevState) => ({
       showModal: !prevState.showModal,
       selectedMovie: item,
@@ -42,20 +49,19 @@ export class App extends Component<{}, OutputData> {
   };
 
   render() {
-    const { showModal, selectedMovie } = this.state;
     return (
       <>
         <section>
-          {showModal && selectedMovie && (
+          {this.state.showModal && this.state.selectedMovie && (
             <div className="fixed inset-0 overflow-y-auto z-50 flex items-center justify-center">
               <div className="fixed inset-0 bg-black opacity-50"></div>
               <div className="relative flex flex-col justify-center items-center bg-white p-6 rounded-lg w-1/4">
-                <img src={selectedMovie.gambar} alt="" />
-                <h2 className="text-xl font-bold my-4 text-white text-center py-4 px-5 w-full rounded-md bg-green-500">{selectedMovie.judul}</h2>
-                <p className="text-gray-500 mb-4 text-center  tracking-tight">{selectedMovie.deskripsi}</p>
+                <img src={this.state.selectedMovie.gambar} alt="" />
+                <h2 className="text-xl font-bold my-4 text-white text-center py-4 px-5 w-full rounded-md bg-green-500">{this.state.selectedMovie.judul}</h2>
+                <p className="text-gray-500 mb-4 text-center  tracking-tight">{this.state.selectedMovie.deskripsi}</p>
 
                 <div className="flex justify-center items-center">
-                  <p className={selectedMovie.rating > 8 ? `text-white font-bold py-2 px-4 bg-green-400` : `text-white font-bold py-2 px-4 bg-yellow-500`}>{selectedMovie.rating}</p>
+                  <p className={this.state.selectedMovie.rating > 8 ? `text-white font-bold py-2 px-4 bg-green-400` : `text-white font-bold py-2 px-4 bg-yellow-500`}>{this.state.selectedMovie.rating}</p>
                   <span className=" cursor-pointer bg-slate-700 hover:bg-slate-700 text-white font-bold py-2 px-4 focus:outline-none focus:shadow-outline" onClick={() => this.toggleModal(null)}>
                     Tutup
                   </span>
