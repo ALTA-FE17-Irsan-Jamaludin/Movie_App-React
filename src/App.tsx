@@ -131,7 +131,7 @@ export class App extends Component<{}, OutputData> {
               </div>
             </div>
 
-            <div className="right w-screen overflow-y-auto h-full flex flex-col justify-center items-center gap-2 ">
+            <div className="right ml-2 w-screen overflow-y-auto h-full flex flex-col justify-center items-center gap-2 ">
               {/* <h1 className="font-bold ">{this.state.play === false ? "Favorite Movies" : `Playing Movies`}</h1> */}
               {this.state.play === false ? (
                 <div className="h-full grid grid-cols-4 items-center justify-center gap-3 px-3">
