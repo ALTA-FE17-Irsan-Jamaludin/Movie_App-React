@@ -4,15 +4,14 @@ interface dataFilm {
   deskripsi: string;
   rating: number;
   detail: () => void;
-  addFavorit?: () => void;
 }
 
-function Card(props: dataFilm) {
-  const { name, gambar, deskripsi, rating, detail, addFavorit } = props;
+function CardFavorite(props: dataFilm) {
+  const { name, gambar, deskripsi, rating, detail } = props;
 
   return (
     <div className="flex flex-col h-[20rem] sm:w-11/12 rounded-md overflow-hidden shadow-sm bg-primary opacity-95 mt-5">
-      <img src={gambar} alt="" className=" h-[50%]" />
+      <img src={gambar} alt="" width={240} className="h-[50%] bg-cover" />
       <div className="title text-center h-[17%] bg-teal-500 overflow-y-auto">
         <h3 className="font-semibold drop-shadow-md px-3">{name}</h3>
       </div>
@@ -25,11 +24,8 @@ function Card(props: dataFilm) {
           </span>
         </div>
       </div>
-      <div className="flex justify-center cursor-pointer items-center h-[8%]">
-        <img className="h-4 lg:h-7 mb-2 border-2 border-slate-400 rounded-lg" src="https://img.icons8.com/3d-fluency/94/love-circled.png" onClick={addFavorit} alt="love-circled" />
-      </div>
     </div>
   );
 }
 
-export default Card;
+export default CardFavorite;
