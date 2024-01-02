@@ -79,8 +79,8 @@ function Favorite() {
         {nilaiOutput.showModal && nilaiOutput.selectedMovie && (
           <div className="fixed inset-0 overflow-y-auto z-50 flex items-center justify-center">
             <div className="fixed inset-0 bg-black opacity-50"></div>
-            <div className="relative flex flex-col h-[60%] sm:h-[60%] lg:h-[80%] justify-center items-center bg-white p-6 rounded-lg lg:w-1/4 w-9/12">
-              <img src={poster + nilaiOutput.selectedMovie.poster_path} className="h-[80%] w-full" height={30} alt="" />
+            <div className="relative flex flex-col h-[60%] sm:h-[80%] lg:h-[80%] justify-center items-center bg-white p-6 rounded-lg lg:w-1/4 w-9/12">
+              <img src={poster + nilaiOutput.selectedMovie.poster_path} className="h-[30%] sm:h-[50%] w-full" height={30} alt="" />
               <h2 className="sm:text-xl text-base font-bold my-4 text-white text-center py-4 px-5 w-full rounded-md bg-green-500">{nilaiOutput.selectedMovie.title}</h2>
               <p className="text-gray-500  mb-4 text-center tracking-tight">{nilaiOutput.selectedMovie.original_title}</p>
 

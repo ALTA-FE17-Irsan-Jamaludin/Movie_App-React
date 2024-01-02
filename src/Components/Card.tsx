@@ -20,7 +20,7 @@ function Card(props: dataFilm) {
       <p className="overflow-hidden text-sm mt-2 mb-2 text-center text-slate-400 h-[15%] px-2 ">{deskripsi}</p>
       <div className="bottom flex justify-center mb-3 items-center">
         <div className="rating flex justify-center items-center rounded-sm overflow-hidden ">
-          <span className={rating > 8 ? `bg-green-300 px-5 font-bold}` : `bg-yellow-500 px-5 font-bold`}>{rating}</span>
+          <span className={rating > 8 ? `bg-green-300 px-5 font-bold` : `bg-yellow-500 px-5 font-bold`}>{rating}</span>
           <span className="px-5 bg-slate-800 font-medium cursor-pointer" onClick={detail}>
             Detail
           </span>
