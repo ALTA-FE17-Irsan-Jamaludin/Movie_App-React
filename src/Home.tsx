@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 interface Movie {
+  id: any;
   judul: string;
   deskripsi: string;
   gambar: string;
@@ -69,7 +70,6 @@ function Home() {
 
   const kirimAPI = async (item: Movie) => {
     const { title, original_title, vote_average, poster_path } = item;
-
     await axios
       .post(`https://658c0031859b3491d3f54070.mockapi.io/Movies`, { title, original_title, vote_average, poster_path })
       .then(() => {
@@ -82,11 +82,15 @@ function Home() {
 
   const modalBoxFunc = (item: null | Movie) => {
     setNilaiOutput((prevState) => ({ ...prevState, showModal: !prevState.showModal, selectedMovie: item }));
+    if (item) {
+      navigate(`/detail/${item.id}`);
+    }
   };
 
   useEffect(() => {
     searchAPI();
   }, [searchAPI]);
+
   return (
     <>
       <section>
@@ -110,16 +114,16 @@ function Home() {
 
         <div className=" flex sm:flex-row flex-col justify-center items-center h-screen w-screen">
           <div className="left bg-teal-600 h-1/3 sm:h-full flex flex-col justify-center items-center border-r-2 border-slate-400  sm:w-[50%] lg:w-[35%] w-screen shadow-md">
-            <span className=" font-bold text-3xl drop-shadow-md">Movies App</span>
+            <span className=" font-bold text-3xl mt-5 sm:mt-0 drop-shadow-md">Movies App</span>
 
-            <div className="search h-14 rounded-lg w-72 bg-slate-100 flex justify-between items-center mt-5 ">
+            <div className="search h-9 w-9/12 lg:h-14 rounded-lg lg:w-72 bg-slate-100 flex justify-between items-center mt-5 ">
               <div className="icon-search flex flex-col w-1/4 h-full justify-center items-center">
                 <img width="24" height="24" src="https://img.icons8.com/cotton/64/000000/search--v1.png" alt="search--v1" />
               </div>
               <input
                 onChange={(e) => setNilaiOutput((prevData) => ({ ...prevData, searchData: e.target.value }))}
                 type="text"
-                className="bg-slate-50 w-full h-[3.1rem] text-black rounded-lg text-center font-semibold border-b-slate-500 mr-1"
+                className="bg-slate-50 h-[1.8rem] pl-5 w-full lg:h-[3.1rem] text-black rounded-lg  font-semibold border-b-slate-500 mr-1"
               />
             </div>
 
@@ -141,7 +145,7 @@ function Home() {
             <div className="h-full grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 items-center justify-center gap-3 px-5">
               {nilaiOutput.apiDataPlaying &&
                 nilaiOutput.apiDataPlaying.map((item: any, index: number) => {
-                  return <Card key={index} name={item.title} deskripsi={item.original_title} gambar={poster + item.poster_path} rating={item.vote_average} detail={() => modalBoxFunc(item)} addFavorit={() => kirimAPI(item)} />;
+                  return <Card key={index} id={item.id} name={item.title} deskripsi={item.original_title} gambar={poster + item.poster_path} rating={item.vote_average} detail={() => modalBoxFunc(item)} addFavorit={() => kirimAPI(item)} />;
                 })}
             </div>
           </div>

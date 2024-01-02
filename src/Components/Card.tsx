@@ -5,6 +5,7 @@ interface dataFilm {
   rating: number;
   detail: () => void;
   addFavorit?: () => void;
+  id: any;
 }
 
 function Card(props: dataFilm) {

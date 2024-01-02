@@ -4,14 +4,15 @@ interface dataFilm {
   deskripsi: string;
   rating: number;
   detail: () => void;
+  hapus: () => void;
 }
 
 function CardFavorite(props: dataFilm) {
-  const { name, gambar, deskripsi, rating, detail } = props;
+  const { name, gambar, deskripsi, rating, detail, hapus } = props;
 
   return (
     <div className="flex flex-col h-[20rem] sm:w-11/12 rounded-md overflow-hidden shadow-sm bg-primary opacity-95 mt-5">
-      <img src={gambar} alt="" width={240} className="h-[50%] bg-cover" />
+      <img src={gambar} alt="" width={240} className="h-[55%] bg-cover" />
       <div className="title text-center h-[17%] bg-teal-500 overflow-y-auto">
         <h3 className="font-semibold drop-shadow-md px-3">{name}</h3>
       </div>
@@ -23,6 +24,12 @@ function CardFavorite(props: dataFilm) {
             Detail
           </span>
         </div>
+      </div>
+
+      <div className="flex justify-center cursor-pointer items-center h-[8%]">
+        <button className="h-4 lg:h-6 mb-2 border-2 border-slate-400 rounded-lg bg-red-500 flex justify-center items-center text-xs" onClick={hapus}>
+          Delete
+        </button>
       </div>
     </div>
   );

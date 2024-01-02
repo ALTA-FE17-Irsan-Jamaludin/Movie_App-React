@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 interface Movie {
+  id: number;
   judul: string;
   deskripsi: string;
   gambar: string;
@@ -55,6 +56,20 @@ function Favorite() {
     setNilaiOutput((prevState) => ({ ...prevState, showModal: !prevState.showModal, selectedMovie: item }));
   };
 
+  const deleteAPI = async (id: number) => {
+    try {
+      const response = await axios.delete(`https://658c0031859b3491d3f54070.mockapi.io/Movies/${id}`);
+      if (response.status === 200) {
+        alert("Your card have been deleted");
+        favoriteAPI();
+      } else {
+        alert("Failed Response");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     favoriteAPI();
   }, []);
@@ -100,7 +115,7 @@ function Favorite() {
             <div className="h-full grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 items-center justify-center gap-3 px-5">
               {nilaiOutput.apiDataFavorite &&
                 nilaiOutput.apiDataFavorite.map((item: any, index: number) => {
-                  return <CardFavorite key={index} name={item.title} deskripsi={item.original_title} gambar={poster + item.poster_path} rating={item.vote_average} detail={() => modalBoxFunc(item)} />;
+                  return <CardFavorite key={index} name={item.title} deskripsi={item.original_title} gambar={poster + item.poster_path} rating={item.vote_average} detail={() => modalBoxFunc(item)} hapus={() => deleteAPI(item.id)} />;
                 })}
             </div>
             )
