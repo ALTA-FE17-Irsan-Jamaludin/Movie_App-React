@@ -93,7 +93,7 @@ function Home() {
 
   return (
     <>
-      <section>
+      <section className="text-slate-100">
         {nilaiOutput.showModal && nilaiOutput.selectedMovie && (
           <div className="fixed inset-0 overflow-y-auto z-50 flex items-center justify-center">
             <div className="fixed inset-0 bg-black opacity-50"></div>

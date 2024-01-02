@@ -12,7 +12,7 @@ function Card(props: dataFilm) {
   const { name, gambar, deskripsi, rating, detail, addFavorit } = props;
 
   return (
-    <div className="flex flex-col h-[20rem] sm:w-11/12 rounded-md overflow-hidden shadow-sm bg-primary opacity-95 mt-5">
+    <div className="flex flex-col h-[20rem] sm:w-11/12 rounded-md overflow-hidden shadow-sm text-slate-100 bg-primary opacity-95 mt-5">
       <img src={gambar} alt="" className=" h-[50%]" />
       <div className="title text-center h-[17%] bg-teal-500 overflow-y-auto">
         <h3 className="font-semibold drop-shadow-md px-3">{name}</h3>

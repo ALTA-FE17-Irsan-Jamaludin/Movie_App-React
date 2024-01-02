@@ -44,7 +44,7 @@ function Detail() {
 
   return (
     <>
-      <section>
+      <section className="text-slate-100">
         <div className=" flex sm:flex-row flex-col justify-center items-center h-screen w-screen">
           <div className="left bg-teal-600 h-1/3 sm:h-full flex flex-col justify-center items-center border-r-2 border-slate-400  sm:w-[50%] lg:w-[35%] w-screen shadow-md">
             <span className=" font-bold text-3xl drop-shadow-md">Movies App</span>
