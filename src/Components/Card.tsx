@@ -1,14 +1,7 @@
-interface dataFilm {
-  name: string;
-  gambar: string;
-  deskripsi: string;
-  rating: number;
-  detail: () => void;
-  addFavorit?: () => void;
-  id: any;
-}
+import { FC } from "react";
+import { dataFilm } from "../Utils/typeInterface";
 
-function Card(props: dataFilm) {
+const Card: FC<dataFilm> = (props: dataFilm) => {
   const { name, gambar, deskripsi, rating, detail, addFavorit } = props;
 
   return (
@@ -31,6 +24,6 @@ function Card(props: dataFilm) {
       </div>
     </div>
   );
-}
+};
 
 export default Card;

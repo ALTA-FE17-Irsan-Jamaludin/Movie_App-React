@@ -1,23 +1,14 @@
-import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect, FC } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
+import { MovieDetail } from "./Utils/typeInterface";
 
-interface Movie {
-  id: any;
-  title: string;
-  poster_path: string;
-  vote_average: number;
-  overview: string;
-  release_date: string;
-  genres: any;
-  popularity: number;
-  production_companies: any;
-}
-
-function Detail() {
+const Detail: FC = () => {
   const navigate = useNavigate();
-  const [movie, setMovie] = useState<Movie | null>(null);
-  const { id } = useParams();
+  const [movie, setMovie] = useState<MovieDetail | null>(null);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const id = searchParams.get("id");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,12 +54,12 @@ function Detail() {
 
           <div className="right sm:ml-2 w-screen  overflow-y-auto lg:h-[92%] h-full flex flex-col justify-center items-center gap-2  ">
             <div className=" grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-1 items-center justify-center gap-3 lg:px-5 px-0">
-              {movie === null ? (
+              {!movie ? (
                 <div>Data Not Found</div>
               ) : (
-                <div className="flex flex-col lg:flex-row justify-center lg:w-auto items-center gap-5 w-screen rounded-md overflow-hidden lg:pb-0 pb-8 lg:pt-0 pt-[19rem] bg-teal-700">
-                  <div className="lg:w-2/5 w-[95%] lg:relative lg:h-full">
-                    <img src={poster + movie.poster_path} height={50} className="lg:rounded-none rounded-md" />
+                <div className="flex flex-col lg:flex-row justify-center lg:w-auto items-center gap-5 w-screen rounded-none lg:rounded-md overflow-hidden lg:pb-0 pb-8 md:h-auto h-[135vh] lg:pt-0 pt-[14rem] bg-teal-700">
+                  <div className="lg:w-2/5 w-[95%] lg:relative bg-cover h-1/2 lg:h-full">
+                    <img src={poster + movie.poster_path} className="lg:rounded-none rounded-md md:w-auto md:h-auto h-[20rem]  w-full " />
                   </div>
                   <div className="h-full w-screen flex flex-col lg:w-3/5 gap-3 px-5 ">
                     <span className="text-xl font-bold">{movie.title}</span>
@@ -98,6 +89,6 @@ function Detail() {
       </section>
     </>
   );
-}
+};
 
 export default Detail;
