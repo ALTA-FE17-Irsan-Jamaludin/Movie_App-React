@@ -21,7 +21,7 @@ const CardFavorite: FC<dataFilmFavorite> = (props: dataFilmFavorite) => {
       </div>
 
       <div className="flex justify-center cursor-pointer items-center h-[8%]">
-        <button className="h-4 lg:h-6 mb-2 border-2 border-slate-400 rounded-lg bg-red-500 flex justify-center items-center text-xs" onClick={hapus}>
+        <button className="h-4 lg:h-6 mb-2 border-2 border-slate-400 rounded-md font-bold bg-red-500 flex justify-center items-center text-xs" onClick={hapus}>
           Delete
         </button>
       </div>

@@ -1,5 +1,9 @@
 import { ReactEventHandler, ReactNode } from "react";
 import { FC } from "react";
+import Cookies from "js-cookie";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import gambarLogOut from "../img/icons8-log-out-50.png";
 
 interface TypeLeft {
   searchInput?: (e: any) => void;
@@ -10,6 +14,32 @@ interface TypeLeft {
 
 const Left: FC<TypeLeft> = (props: TypeLeft) => {
   const { searchInput, homeButton, favoriteButton, children } = props;
+  const navigate = useNavigate();
+  const username = Cookies.get("username");
+
+  const logOut = (): void => {
+    if (username) {
+      Swal.fire({
+        title: "Confirmation",
+        text: "Are you sure to Logout ?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        confirmButtonColor: "rgb(13 148 136)",
+      }).then((result) => {
+        if (result.value) {
+          Cookies.remove("username");
+          navigate("/");
+        }
+      });
+    }
+  };
+
+  const logIn = (): void => {
+    navigate("/");
+  };
+
   return (
     <div className=" flex sm:flex-row flex-col justify-center items-center h-screen w-screen">
       <div className="left bg-teal-600 h-1/3 sm:h-full flex flex-col justify-center items-center border-r-2 border-slate-400  sm:w-[50%] lg:w-[35%] w-screen shadow-md">
@@ -32,12 +62,24 @@ const Left: FC<TypeLeft> = (props: TypeLeft) => {
             <span className="ml-2 text-2xl font-bold text-white drop-shadow-md"> Favorite</span>
           </button>
         </div>
+        <div className="sm:flex gap-5 m-3  hidden">
+          {username ? (
+            <button className=" text-xs  w-[8rem] flex justify-center items-center font-bold  bg-teal-800 " onClick={logOut}>
+              <img src={gambarLogOut} alt="" />
+              Logout
+            </button>
+          ) : (
+            <button className=" text-xs  w-[8rem] flex justify-center items-center  font-bold bg-teal-800 " onClick={logIn}>
+              <img src={gambarLogOut} alt="" />
+              Login
+            </button>
+          )}
+        </div>
+
         <hr />
       </div>
 
-      <div className="right mb-7 md:mb-0 sm:ml-2 w-screen overflow-y-auto lg:h-[92%] h-full flex flex-col justify-center items-center gap-2 ">
-        <div className="h-full grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 items-center justify-center gap-3 px-5">{children}</div>
-      </div>
+      {children}
     </div>
   );
 };

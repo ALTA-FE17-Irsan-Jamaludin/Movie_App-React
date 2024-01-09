@@ -6,6 +6,7 @@ export interface Movie {
   rating: number;
   title: string;
   poster_path: string;
+  overview: string;
   original_title: string;
   vote_average: number;
 }
@@ -56,4 +57,9 @@ export interface dataFilmFavorite {
   rating: number;
   detail: () => void;
   hapus: () => void;
+}
+
+export interface diri {
+  username: string;
+  password: number | string;
 }

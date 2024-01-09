@@ -17,6 +17,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+#confirmButtonColor {
+  background-color: #3498db; /* Warna biru contoh */
+  color: #ffffff; /* Warna putih contoh */
+}
+
 a {
   font-weight: 500;
   color: #646cff;
