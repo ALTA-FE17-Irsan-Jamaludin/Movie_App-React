@@ -9,11 +9,13 @@ interface TypeLeft {
   searchInput?: (e: any) => void;
   homeButton: () => void;
   favoriteButton: ReactEventHandler;
+  search?: (e: any) => void;
   children?: ReactNode;
+  value: string;
 }
 
 const Left: FC<TypeLeft> = (props: TypeLeft) => {
-  const { searchInput, homeButton, favoriteButton, children } = props;
+  const { searchInput, homeButton, favoriteButton, children, search, value } = props;
   const navigate = useNavigate();
   const username = Cookies.get("username");
 
@@ -46,10 +48,10 @@ const Left: FC<TypeLeft> = (props: TypeLeft) => {
         <span className=" font-bold text-3xl mt-5 sm:mt-0 drop-shadow-md">Movies App</span>
 
         <div className={`search h-9 w-9/12 lg:h-14 rounded-lg lg:w-72 bg-slate-100 flex justify-between items-center mt-5 ${searchInput === undefined ? `hidden` : `block`} `}>
-          <div className="icon-search flex flex-col w-1/4 h-full justify-center items-center">
+          <div onClick={search} className="cursor-pointer icon-search flex flex-col w-1/4 h-full justify-center items-center">
             <img width="24" height="24" src="https://img.icons8.com/cotton/64/000000/search--v1.png" alt="search--v1" />
           </div>
-          <input onChange={searchInput ? (e: any) => searchInput(e) : undefined} type="text" className={`bg-slate-50 h-[1.8rem] pl-5 w-full lg:h-[3.1rem] text-black rounded-lg  font-semibold border-b-slate-500 mr-1 `} />
+          <input onChange={searchInput ? (e: any) => searchInput(e) : undefined} type="text" value={value} className={`bg-slate-50 h-[1.8rem] pl-5 w-full lg:h-[3.1rem] text-black rounded-lg  font-semibold border-b-slate-500 mr-1 `} />
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-1 gap-5 w-11/12 my-5 px-3">

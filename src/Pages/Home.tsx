@@ -10,6 +10,7 @@ import BaseTMDB from "axios";
 import Swal from "sweetalert2";
 import "../custom.css";
 import Cookies from "js-cookie";
+import { NotFound } from "../Components/NotFound";
 
 const Home: FC = () => {
   const api_key = import.meta.env.VITE_MOVIE_KEY;
@@ -26,6 +27,8 @@ const Home: FC = () => {
   });
 
   const homeButton = (): void => {
+    setNilaiOutput((prev) => ({ ...prev, searchData: "" }));
+    homeAPI();
     navigate("/home");
   };
 
@@ -52,6 +55,20 @@ const Home: FC = () => {
       try {
         const response = await BaseTMDB.get(`https://api.themoviedb.org/3/search/movie?query=${nilaiOutput.searchData}&api_key=${api_key}`);
         setNilaiOutput((prevNilai) => ({ ...prevNilai, apiDataPlaying: response.data.results }));
+        if (response.data.results.length === 0) {
+          Swal.fire({
+            title: "No Data",
+            text: "Please fill the right movie title",
+            icon: "error",
+            confirmButtonText: "Ok",
+            confirmButtonColor: "rgb(13 148 136)",
+          }).then((result) => {
+            if (result.value) {
+              setNilaiOutput((prev) => ({ ...prev, searchData: "" }));
+              homeAPI();
+            }
+          });
+        }
       } catch (error) {
         Swal.fire({
           title: "Your API Error",
@@ -130,34 +147,30 @@ const Home: FC = () => {
     } else {
       searchAPI();
     }
-  }, [searchAPI]);
+  }, []);
 
   return (
     <>
       <section className="text-slate-100">
         <div className=" flex sm:flex-row flex-col justify-center items-center h-screen w-screen">
-          <Left searchInput={(e: any) => setNilaiOutput((prev) => ({ ...prev, searchData: e.target.value }))} homeButton={homeButton} favoriteButton={favoriteButton}>
+          <Left value={nilaiOutput.searchData} searchInput={(e: any) => setNilaiOutput((prev) => ({ ...prev, searchData: e.target.value }))} homeButton={homeButton} favoriteButton={favoriteButton} search={searchAPI}>
             <div className="right mb-7 md:mb-0 sm:ml-2 w-screen overflow-y-auto lg:h-[92%] h-full flex flex-col justify-center items-center gap-2 ">
               <div className="h-full grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 items-center justify-center gap-3 px-5">
-                {nilaiOutput.apiDataPlaying ? (
-                  nilaiOutput.apiDataPlaying.map((item: any, index: number) => {
-                    return (
-                      <Card
-                        key={index}
-                        id={item.id}
-                        name={item.title}
-                        deskripsi={item.overview}
-                        gambar={poster + item.poster_path ? poster + item.poster_path : `https://picsum.photos/300/200?random=1`}
-                        rating={item.vote_average}
-                        detail={() => modalBoxFunc(item)}
-                        addFavorit={() => kirimAPI(item)}
-                      />
-                    );
-                  })
+                {nilaiOutput.apiDataPlaying.length > 0 ? (
+                  nilaiOutput.apiDataPlaying.map((item: any, index: number) => (
+                    <Card
+                      key={index}
+                      id={item.id}
+                      name={item.title}
+                      deskripsi={item.overview}
+                      gambar={item?.poster_path ? poster + item?.poster_path : `https://via.placeholder.com/300x200/CCCCCC/000000?text=Image Not Found`}
+                      rating={item.vote_average}
+                      detail={() => modalBoxFunc(item)}
+                      addFavorit={() => kirimAPI(item)}
+                    />
+                  ))
                 ) : (
-                  <div>
-                    <h1>Tidak ada Data</h1>
-                  </div>
+                  <NotFound />
                 )}
               </div>
             </div>

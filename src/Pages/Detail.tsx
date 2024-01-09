@@ -13,7 +13,6 @@ const Detail: FC = () => {
   const [movie, setMovie] = useState<MovieDetail | null>(null);
   const location = useLocation();
   const id = location.state.id;
-  console.log(api_key);
   const username = Cookies.get("username");
 
   const fetchData = async () => {
@@ -21,7 +20,6 @@ const Detail: FC = () => {
     if (username) {
       try {
         const response = await BaseTMDB.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${api_key}`);
-        console.log(response.data);
         setMovie(response.data);
       } catch (error) {
         setMovie(null);
@@ -72,7 +70,7 @@ const Detail: FC = () => {
     <>
       <section className="text-slate-100">
         <div className=" flex sm:flex-row flex-col justify-center items-center h-screen w-screen">
-          <Left homeButton={homeButton} favoriteButton={favoriteButton}>
+          <Left value="" search={undefined} homeButton={homeButton} favoriteButton={favoriteButton}>
             <div className="right sm:ml-2 w-screen  overflow-y-auto lg:h-[92%] h-full flex flex-col justify-center items-center gap-2  ">
               <div className=" grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-1 items-center justify-center gap-3 lg:px-5 px-0">
                 {movie === null ? (
