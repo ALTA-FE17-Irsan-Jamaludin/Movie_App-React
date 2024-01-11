@@ -83,7 +83,7 @@ const Home: FC = () => {
   };
 
   const kirimAPI = async (item: Movie) => {
-    const { title, original_title, overview, vote_average, poster_path } = item;
+    const { title, original_title, overview, vote_average, poster_path, id } = item;
     Swal.fire({
       title: "Confirmation",
       text: "Are You Sure to add This Movie to Favorite ?",
@@ -95,7 +95,7 @@ const Home: FC = () => {
     }).then(async (result) => {
       try {
         if (result.value) {
-          await BaseUrl.post(``, { title, original_title, overview, vote_average, poster_path })
+          await BaseUrl.post(``, { title, original_title, overview, vote_average, poster_path, id })
             .then(() => {
               Swal.fire({
                 title: "Your Movie was Added to Favorite",

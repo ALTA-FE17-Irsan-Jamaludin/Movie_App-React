@@ -7,10 +7,12 @@ import { OutputDataFavorite } from "../Utils/typeInterface";
 import BaseUrl from "axios";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
+import { useStateContext } from "../context/ModeContext";
 
 const Favorite: FC = () => {
   const navigate = useNavigate();
   const poster = `https://image.tmdb.org/t/p/w500/`;
+  const { apiData, handlefavoriteAPI } = useStateContext();
 
   const [nilaiOutput, setNilaiOutput] = useState<OutputDataFavorite>({
     home: true,
@@ -26,20 +28,6 @@ const Favorite: FC = () => {
 
   const favoriteButton = (): void => {
     navigate("/favorite");
-  };
-
-  const favoriteAPI = async () => {
-    try {
-      const response = await BaseUrl.get(``);
-      setNilaiOutput((prevNilai) => ({ ...prevNilai, apiDataFavorite: response.data }));
-    } catch (error) {
-      Swal.fire({
-        title: "Your API Error",
-        text: "Please check your Connection",
-        icon: "error",
-        confirmButtonText: "Ok",
-      });
-    }
   };
 
   const modalBoxFunc = (item: null | Movie) => {
@@ -67,7 +55,7 @@ const Favorite: FC = () => {
               confirmButtonText: "Ok",
               confirmButtonColor: "rgb(13 148 136)",
             });
-            favoriteAPI();
+            handlefavoriteAPI();
           } else {
             alert("Failed Response");
           }
@@ -93,7 +81,7 @@ const Favorite: FC = () => {
         }
       });
     } else {
-      favoriteAPI();
+      handlefavoriteAPI();
     }
   }, []);
   return (
@@ -124,11 +112,11 @@ const Favorite: FC = () => {
         )}
 
         <div className=" flex sm:flex-row flex-col justify-center items-center h-screen w-screen">
-          <Left searchInput={undefined} homeButton={homeButton} favoriteButton={favoriteButton}>
+          <Left value={""} searchInput={undefined} homeButton={homeButton} favoriteButton={favoriteButton}>
             <div className="right mb-7 md:mb-0 sm:ml-2 w-screen overflow-y-auto lg:h-[92%] h-full flex flex-col justify-center items-center gap-2 ">
               <div className="h-full grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 items-center justify-center gap-3 px-5">
-                {nilaiOutput.apiDataFavorite &&
-                  nilaiOutput.apiDataFavorite.map((item: any, index: number) => {
+                {apiData &&
+                  apiData.map((item: any, index: number) => {
                     return <CardFavorite key={index} name={item.title} deskripsi={item.overview} gambar={poster + item.poster_path} rating={item.vote_average} detail={() => modalBoxFunc(item)} hapus={() => deleteAPI(item.id)} />;
                   })}
               </div>

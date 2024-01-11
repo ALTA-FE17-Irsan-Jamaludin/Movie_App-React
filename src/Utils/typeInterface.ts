@@ -1,3 +1,6 @@
+import { Dispatch } from "react";
+import { SetStateAction } from "react";
+
 export interface Movie {
   id: any;
   judul: string;
@@ -62,4 +65,10 @@ export interface dataFilmFavorite {
 export interface diri {
   username: string;
   password: number | string;
+}
+
+export interface ContextFavoritProps {
+  children?: React.ReactNode;
+  apiData?: any[];
+  setApiData?: Dispatch<SetStateAction<any[]>>;
 }
