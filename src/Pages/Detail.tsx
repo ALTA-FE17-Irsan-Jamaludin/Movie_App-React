@@ -6,8 +6,10 @@ import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import Left from "../Components/Left";
 import { DetailCard } from "../Components/DetailCard";
+import { useStateContext } from "../context/ModeContext";
 
 const Detail: FC = () => {
+  const { darkMode, setDarkMode } = useStateContext();
   const api_key = import.meta.env.VITE_MOVIE_KEY;
   const navigate = useNavigate();
   const [movie, setMovie] = useState<MovieDetail | null>(null);
@@ -56,6 +58,10 @@ const Detail: FC = () => {
     }
   }, [username, id]);
 
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
   const homeButton = (): void => {
     navigate("/home");
   };
@@ -70,7 +76,7 @@ const Detail: FC = () => {
     <>
       <section className="text-slate-100">
         <div className=" flex sm:flex-row flex-col justify-center items-center h-screen w-screen">
-          <Left value="" search={undefined} homeButton={homeButton} favoriteButton={favoriteButton}>
+          <Left value="" mode={toggleDarkMode} search={undefined} homeButton={homeButton} favoriteButton={favoriteButton}>
             <div className="right sm:ml-2 w-screen  overflow-y-auto lg:h-[92%] h-full flex flex-col justify-center items-center gap-2  ">
               <div className=" grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-1 items-center justify-center gap-3 lg:px-5 px-0">
                 {movie === null ? (
