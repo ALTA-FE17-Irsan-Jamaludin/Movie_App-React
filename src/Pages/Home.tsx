@@ -11,11 +11,13 @@ import Swal from "sweetalert2";
 import "../custom.css";
 import Cookies from "js-cookie";
 import { NotFound } from "../Components/NotFound";
+import { useStateContext } from "../context/ModeContext";
 
 const Home: FC = () => {
   const api_key = import.meta.env.VITE_MOVIE_KEY;
   const poster = `https://image.tmdb.org/t/p/w500/`;
   const navigate = useNavigate();
+  const { darkMode, setDarkMode } = useStateContext();
 
   const [nilaiOutput, setNilaiOutput] = useState<OutputData>({
     home: true,
@@ -25,6 +27,10 @@ const Home: FC = () => {
     selectedMovie: null,
     searchData: "",
   });
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
 
   const homeButton = (): void => {
     setNilaiOutput((prev) => ({ ...prev, searchData: "" }));
@@ -91,7 +97,7 @@ const Home: FC = () => {
       showCancelButton: true,
       confirmButtonText: "Yes",
       cancelButtonText: "No",
-      confirmButtonColor: "rgb(13 148 136)",
+      confirmButtonColor: darkMode ? "rgb(0 0 0)" : "rgb(13 148 136)",
     }).then(async (result) => {
       try {
         if (result.value) {
@@ -104,7 +110,7 @@ const Home: FC = () => {
                 showCancelButton: true,
                 confirmButtonText: "Yes",
                 cancelButtonText: "No",
-                confirmButtonColor: "rgb(13 148 136)",
+                confirmButtonColor: darkMode ? "rgb(0 0 0)" : "rgb(13 148 136)",
               }).then((result) => {
                 if (result.value) {
                   navigate("/favorite");
@@ -153,7 +159,7 @@ const Home: FC = () => {
     <>
       <section className="text-slate-100">
         <div className=" flex sm:flex-row flex-col justify-center items-center h-screen w-screen">
-          <Left value={nilaiOutput.searchData} searchInput={(e: any) => setNilaiOutput((prev) => ({ ...prev, searchData: e.target.value }))} homeButton={homeButton} favoriteButton={favoriteButton} search={searchAPI}>
+          <Left value={nilaiOutput.searchData} searchInput={(e: any) => setNilaiOutput((prev) => ({ ...prev, searchData: e.target.value }))} mode={toggleDarkMode} homeButton={homeButton} favoriteButton={favoriteButton} search={searchAPI}>
             <div className="right mb-7 md:mb-0 sm:ml-2 w-screen overflow-y-auto lg:h-[92%] h-full flex flex-col justify-center items-center gap-2 ">
               <div className="h-full grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 items-center justify-center gap-3 px-5">
                 {nilaiOutput.apiDataPlaying.length > 0 ? (

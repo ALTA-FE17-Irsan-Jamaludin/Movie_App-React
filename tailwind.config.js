@@ -5,6 +5,7 @@ export default {
     extend: {
       colors: {
         primary: `rgb(226, 232, 240)`,
+        dark: "class",
       },
     },
   },

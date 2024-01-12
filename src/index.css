@@ -39,6 +39,11 @@ body {
   min-height: 100vh;
 }
 
+@apply.dark {
+  background-color: #1a202c;
+  color: #ffffff;
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;

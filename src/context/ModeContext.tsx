@@ -1,13 +1,18 @@
 import { useState, useContext, createContext, FC } from "react";
 import Swal from "sweetalert2";
-import { ContextFavoritProps } from "../Utils/typeInterface";
 import BaseUrl from "axios";
+import { ContextFavoritProps } from "../Utils/typeInterface";
 
-const stateContext = createContext({} as ContextFavoritProps);
+interface ExtendedContextProps extends ContextFavoritProps {
+  darkMode: boolean;
+  setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const stateContext = createContext({} as ExtendedContextProps);
 
 export const useStateContext = () => {
   const context: any = useContext(stateContext);
-  const { apiData } = context;
+  const { apiData, darkMode, setDarkMode } = context;
 
   const handlefavoriteAPI = async () => {
     try {
@@ -25,11 +30,15 @@ export const useStateContext = () => {
 
   return {
     apiData,
+    darkMode,
+    setDarkMode,
     handlefavoriteAPI,
   };
 };
 
 export const StateProvider: FC<ContextFavoritProps> = ({ children }) => {
   const [apiData, setApiData] = useState<any[]>([]);
-  return <stateContext.Provider value={{ apiData, setApiData }}>{children}</stateContext.Provider>;
+  const [darkMode, setDarkMode] = useState<boolean>(false);
+
+  return <stateContext.Provider value={{ apiData, setApiData, darkMode, setDarkMode }}>{children}</stateContext.Provider>;
 };
