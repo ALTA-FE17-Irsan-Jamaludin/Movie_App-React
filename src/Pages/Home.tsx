@@ -11,13 +11,16 @@ import Swal from "sweetalert2";
 import "../custom.css";
 import Cookies from "js-cookie";
 import { NotFound } from "../Components/NotFound";
-import { useStateContext } from "../context/ModeContext";
+import { useSelector } from "react-redux";
+import { onTouch } from "../store/modeSlice";
+import { useDispatch } from "react-redux";
+import { baseURL, poster } from "../../config";
 
 const Home: FC = () => {
   const api_key = import.meta.env.VITE_MOVIE_KEY;
-  const poster = `https://image.tmdb.org/t/p/w500/`;
   const navigate = useNavigate();
-  const { darkMode, setDarkMode } = useStateContext();
+  const dispatch = useDispatch();
+  const cekNilai = useSelector((state: { [key: string]: any }) => state.mode.value);
 
   const [nilaiOutput, setNilaiOutput] = useState<OutputData>({
     home: true,
@@ -29,7 +32,7 @@ const Home: FC = () => {
   });
 
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
+    dispatch(onTouch());
   };
 
   const homeButton = (): void => {
@@ -59,7 +62,7 @@ const Home: FC = () => {
   const searchAPI = async () => {
     if (nilaiOutput.searchData !== "") {
       try {
-        const response = await BaseTMDB.get(`https://api.themoviedb.org/3/search/movie?query=${nilaiOutput.searchData}&api_key=${api_key}`);
+        const response = await BaseTMDB.get(`${baseURL}/search/movie?query=${nilaiOutput.searchData}&api_key=${api_key}`);
         setNilaiOutput((prevNilai) => ({ ...prevNilai, apiDataPlaying: response.data.results }));
         if (response.data.results.length === 0) {
           Swal.fire({
@@ -97,7 +100,7 @@ const Home: FC = () => {
       showCancelButton: true,
       confirmButtonText: "Yes",
       cancelButtonText: "No",
-      confirmButtonColor: darkMode ? "rgb(0 0 0)" : "rgb(13 148 136)",
+      confirmButtonColor: cekNilai ? "rgb(0 0 0)" : "rgb(13 148 136)",
     }).then(async (result) => {
       try {
         if (result.value) {
@@ -110,7 +113,7 @@ const Home: FC = () => {
                 showCancelButton: true,
                 confirmButtonText: "Yes",
                 cancelButtonText: "No",
-                confirmButtonColor: darkMode ? "rgb(0 0 0)" : "rgb(13 148 136)",
+                confirmButtonColor: cekNilai ? "rgb(0 0 0)" : "rgb(13 148 136)",
               }).then((result) => {
                 if (result.value) {
                   navigate("/favorite");

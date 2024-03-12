@@ -5,11 +5,10 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import gambarLogOut from "../img/icons8-log-out-50.png";
 import gambarLogOut2 from "../img/icons8-logou-50.png";
-
-import { useStateContext } from "../context/ModeContext";
 import loveIcon from "../img/-love-circled-94.png";
 import FilmIcon from "../img/-film-reel-94.png";
 import darkIcon from "../img/icons8-dark-mode-48.png";
+import { useSelector } from "react-redux";
 
 interface TypeLeft {
   searchInput?: (e: any) => void;
@@ -25,10 +24,12 @@ const Left: FC<TypeLeft> = (props: TypeLeft) => {
   const { searchInput, homeButton, favoriteButton, children, search, value, mode } = props;
   const navigate = useNavigate();
   const username = Cookies.get("username");
-  const { darkMode } = useStateContext();
+  const darkMode = useSelector((state: { [key: string]: any }) => state.mode.value);
 
   const logOut = (): void => {
     if (username) {
+      const confirmButtonColor = darkMode ? "rgb(0 0 0)" : "rgb(13 148 136)";
+
       Swal.fire({
         title: "Confirmation",
         text: "Are you sure to Logout ?",
@@ -36,7 +37,7 @@ const Left: FC<TypeLeft> = (props: TypeLeft) => {
         showCancelButton: true,
         confirmButtonText: "Yes",
         cancelButtonText: "No",
-        confirmButtonColor: darkMode ? "rgb(0 0 0)" : "rgb(13 148 136)",
+        confirmButtonColor: confirmButtonColor,
       }).then((result) => {
         if (result.value) {
           Cookies.remove("username");

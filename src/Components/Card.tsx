@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { dataFilm } from "../Utils/typeInterface";
-import { useStateContext } from "../context/ModeContext";
 import loveIcon from "../img/-love-circled-94.png";
+import { useSelector } from "react-redux";
 
 const Card: FC<dataFilm> = (props: dataFilm) => {
   const { name, gambar, deskripsi, rating, detail, addFavorit } = props;
-  const { darkMode } = useStateContext();
+  const darkMode = useSelector((state: { [key: string]: any }) => state.mode.value);
 
   return (
     <div className="flex flex-col h-[20rem] sm:w-11/12 rounded-md overflow-hidden shadow-sm text-slate-100 bg-primary opacity-95 mt-5">

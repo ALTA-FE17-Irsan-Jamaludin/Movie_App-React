@@ -8,11 +8,15 @@ import BaseUrl from "axios";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 import { useStateContext } from "../context/ModeContext";
+import { useDispatch, useSelector } from "react-redux";
+import { onTouch } from "../store/modeSlice";
+import { poster } from "../../config";
 
 const Favorite: FC = () => {
   const navigate = useNavigate();
-  const poster = `https://image.tmdb.org/t/p/w500/`;
-  const { apiData, handlefavoriteAPI, darkMode, setDarkMode } = useStateContext();
+  const { apiData, handlefavoriteAPI } = useStateContext();
+  const darkMode = useSelector((state: { [key: string]: any }) => state.mode.value);
+  const dispatch = useDispatch();
 
   const [nilaiOutput, setNilaiOutput] = useState<OutputDataFavorite>({
     home: true,
@@ -23,7 +27,7 @@ const Favorite: FC = () => {
   });
 
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
+    dispatch(onTouch());
   };
 
   const homeButton = (): void => {

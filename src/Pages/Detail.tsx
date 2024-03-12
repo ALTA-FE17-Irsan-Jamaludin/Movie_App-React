@@ -6,16 +6,18 @@ import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import Left from "../Components/Left";
 import { DetailCard } from "../Components/DetailCard";
-import { useStateContext } from "../context/ModeContext";
+import { useDispatch } from "react-redux";
+import { onTouch } from "../store/modeSlice";
+import { poster } from "../../config";
 
 const Detail: FC = () => {
-  const { darkMode, setDarkMode } = useStateContext();
   const api_key = import.meta.env.VITE_MOVIE_KEY;
   const navigate = useNavigate();
   const [movie, setMovie] = useState<MovieDetail | null>(null);
   const location = useLocation();
   const id = location.state.id;
   const username = Cookies.get("username");
+  const dispatch = useDispatch();
 
   const fetchData = async () => {
     const username = Cookies.get("username");
@@ -59,7 +61,7 @@ const Detail: FC = () => {
   }, [username, id]);
 
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
+    dispatch(onTouch());
   };
 
   const homeButton = (): void => {
@@ -69,8 +71,6 @@ const Detail: FC = () => {
   const favoriteButton = (): void => {
     navigate("/favorite");
   };
-
-  const poster = `https://image.tmdb.org/t/p/w500/`;
 
   return (
     <>

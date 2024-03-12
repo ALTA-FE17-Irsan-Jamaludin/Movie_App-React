@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { dataFilmFavorite } from "../Utils/typeInterface";
-import { useStateContext } from "../context/ModeContext";
+import { useSelector } from "react-redux";
 
 const CardFavorite: FC<dataFilmFavorite> = (props: dataFilmFavorite) => {
   const { name, gambar, deskripsi, rating, detail, hapus } = props;
-  const { darkMode } = useStateContext();
+  const darkMode = useSelector((state: { [key: string]: any }) => state.mode.value);
 
   return (
     <div className="flex flex-col h-[20rem] sm:w-11/12 rounded-md overflow-hidden shadow-sm text-slate-100 bg-primary opacity-95 mt-5">

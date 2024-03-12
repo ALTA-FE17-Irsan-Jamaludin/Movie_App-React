@@ -1,10 +1,11 @@
 import { FC } from "react";
 import { MovieDetail } from "../Utils/typeInterface";
-import { useStateContext } from "../context/ModeContext";
+import { useSelector } from "react-redux";
 
 export const DetailCard: FC<MovieDetail> = (props: MovieDetail) => {
   const { title, poster_path, overview, vote_average, release_date, genres, popularity, production_companies } = props;
-  const { darkMode } = useStateContext();
+  const darkMode = useSelector((state: { [key: string]: any }) => state.mode.value);
+
   return (
     <>
       {" "}
